@@ -1,0 +1,21 @@
+#!/bin/bash
+#use
+#copy_to_local username hostip
+user=$1
+host=$2
+echo $user
+echo $host
+#sleep 3
+echo "get path"
+loc=$(ssh $user@$host pwd)
+#echo "loc:" $loc
+#ssh $user@$host pwd
+#sleep 3
+#sshx $user@$host mkdir /$loc/scripts
+echo "Create Scripts folder"
+ssh -i ~/.ssh/id_rsa $user@$host mkdir $loc/scripts
+echo "set rights"
+ssh -i ~/.ssh/id_rsa $user@$host chmod a+rx $loc/scripts
+echo "copy scripts to local pc"
+scp -r /jffs/customscripts/copy_to_local_pc/. $user@$host:$loc/scripts
+

@@ -1,0 +1,7 @@
+#!/bin/sh
+
+mkdir -p /tmp/mnt/nfs1
+#echo  "mount -t nfs 192.168.1.102:/volume1/ISOStorage /mnt/nfs1 -o nfsvers=3,nolock,_netdev,rsize=8192,wsize=8192" > /jffs/scripts/fstab.postconf
+
+mkdir -p /tmp/mnt/nfs2
+#mount -t nfs 192.168.1.102:/volume1/public /mnt/nfs2 -o nfsvers=3,nolock,_netdev,rsize=8192,wsize=8192

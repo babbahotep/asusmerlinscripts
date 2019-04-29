@@ -1,0 +1,23 @@
+#!/bin/sh
+#bof
+
+# Diversion is free to use under the GNU General Public License version 3 (GPL-3.0)
+# https://opensource.org/licenses/GPL-3.0
+
+# Proudly coded by thelonelycoder
+# Copyright (C) 2016-2019 thelonelycoder - All Rights Reserved
+# https://www.snbforums.com/members/thelonelycoder.25480/
+# https://diversion.ch
+
+# Script Version 4.0.7
+
+OF="$(/usr/bin/find $1/entware*/bin/opkg 2> /dev/null)"
+
+if [ "$OF" ]; then
+	ln -nsf "$(echo "$OF" | sed 's~/bin/opkg~~g')" /tmp/opt
+	/opt/etc/init.d/rc.unslung start $0
+	logger -t Diversion "started Entware services, from $0"
+	service restart_dnsmasq
+	diversion ash_history
+fi
+#eof

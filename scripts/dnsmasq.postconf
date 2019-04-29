@@ -1,0 +1,3 @@
+#!/bin/sh
+
+. /opt/share/diversion/file/post-conf.div # Added by Diversion

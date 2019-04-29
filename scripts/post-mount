@@ -1,0 +1,26 @@
+#!/bin/sh
+if [ "$(nvram get ntp_ready)" == "1" ];
+then  # Only start the NTP server if router has itself synchronised with 
+Internet
+   cp /jffs/ntp/ntp.conf /etc/
+   logger -st "($(basename $0))" $$ "***SUCCESS Router copied 
+ntp.conf-file to /etc!"
+   ntpd   -l
+   logger -st "($(basename $0))" $$ "***SUCCESS Router initialized NTP 
+Server!"
+else
+   logger -st "($(basename $0))" $$ "***ERROR Router cannot get 
+initialise NTP Server!"
+fi
+
+. /jffs/scripts/post-mount.div # Added by Diversio
+
+mount -t nfs 192.168.1.102:/volume1/ISOStorage /mnt/nfs1 -o nfsvers=3,nolock,_netdev,rsize=8192,wsize=8192
+mount -t nfs 192.168.1.102:/volume1/public /mnt/nfs2 -o nfsvers=3,nolock,_netdev,rsize=8192,wsize=8192
+
+cp -r -p -P /jffs/customscripts/asus_copy_on_boot/root /tmp/home
+
+sh /mnt/ASUS32GB/entware/etc/init.d/xmail start
+
+export MAIL_ROOT=/opt/var/MailRoot
+

@@ -1,0 +1,3 @@
+#!/bin/sh
+
+[ "$(find $1/entware*/bin/opkg 2> /dev/null)" ] && diversion unmount # Added by Diversion

@@ -1,0 +1,12 @@
+#!/bin/sh
+# This cript get called after all other system services 
+# have been started at boot on router
+# ---------------------------------------------------------
+# Sample cron job to install after reboot
+#cru id min hour day month weekday  a for add l for list d for delete
+#cru a pinggw "0 * * * * /bin/ping -c 10 -q 192.168.2.254"
+ 
+# Run my usb backup script every day at midnight 
+#cru a backup "0 0 * * * /jffs/scripts/usb-backup-script.sh
+#cru a pinggw "0 * * * * /bin/ping -c 10 -q 192.168.2.254"
+cru a backupesxi "30 17 * * *" sh /jffs/customscripts/exec_on_asus/esxibackup/backupesxihost.sh

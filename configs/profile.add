@@ -1,0 +1,5 @@
+[ -f /opt/bin/bash ] && exec /opt/bin/bash
+export SHELL="/opt/bin/bash" 
+
+#ALIAS
+#alias sshx="ssh -i ~/.ssh/id_rsa"

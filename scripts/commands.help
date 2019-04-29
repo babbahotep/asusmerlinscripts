@@ -1,0 +1,5 @@
+iperf3 -c iperf.he.net -R
+
+htop -i eth0
+
+

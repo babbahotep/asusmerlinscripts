@@ -1,0 +1,1 @@
+#mount -t nfs 192.168.1.102:/volume1/ISOStorage /mnt/nfs1 -o nfsvers=3,nolock,_netdev,rsize=8192,wsize=8192

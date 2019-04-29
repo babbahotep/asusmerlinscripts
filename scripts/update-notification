@@ -1,0 +1,83 @@
+#!/bin/sh
+#bof
+
+# Diversion is free to use under the GNU General Public License version 3 (GPL-3.0)
+# https://opensource.org/licenses/GPL-3.0
+
+# Proudly coded by thelonelycoder
+# Copyright (C) 2016-2019 thelonelycoder - All Rights Reserved
+# https://www.snbforums.com/members/thelonelycoder.25480/
+# https://diversion.ch
+
+# Script Version 4.0.8
+
+# This is an Diversion script that sends a notification
+# email when a new firmware is available for this router
+
+# set environment PATH to system binaries
+export PATH=/sbin:/bin:/usr/sbin:/usr/bin:$PATH
+
+if [ -f /opt/share/diversion/.conf/email.conf ]; then
+	. /opt/share/diversion/.conf/email.conf
+
+	version_check(){ echo "$@" | awk -F. '{ printf("%d%03d%03d%03d\n", $1,$2,$3,$4); }';}
+
+	TEMPVERS=$(nvram get webs_state_info)
+	TEMPBETA=$(nvram get webs_state_info_beta)
+
+	if [ "$(echo "$(nvram get buildno)" | grep "380")" ]; then
+			STABLEVERS=${TEMPVERS:5:3}.${TEMPVERS:8:10}
+			BETAVERS=${TEMPBETA:5:3}.${TEMPBETA:8:10}
+	else
+			STABLEVERS=$TEMPVERS
+			BETAVERS=$TEMPBETA
+	fi
+
+	FROM_NAME="Diversion Router Firmware notification"
+	[ -z "$(nvram get odmpid)" ] && routerModel=$(nvram get productid) || routerModel=$(nvram get odmpid)
+	[ -z "$FRIENDLY_ROUTER_NAME" ] && FRIENDLY_ROUTER_NAME=$routerModel
+
+	echo "From: \"$FROM_NAME\" <$FROM_ADDRESS>" >/tmp/divmail-body
+	echo "To: \"$TO_NAME\" <$TO_ADDRESS>" >>/tmp/divmail-body
+	echo "Subject: $FRIENDLY_ROUTER_NAME Router Asuswrt-Merlin new firmware notification" >>/tmp/divmail-body
+	echo "Date: $(date -R)" >>/tmp/divmail-body
+	echo >>/tmp/divmail-body
+	echo "Hey there!" >>/tmp/divmail-body
+	echo >>/tmp/divmail-body
+	echo "A new Asuswrt-Merlin firmware is available for your $FRIENDLY_ROUTER_NAME router at $(nvram get lan_ipaddr)." >>/tmp/divmail-body
+	echo >>/tmp/divmail-body
+	echo "Installed version: $(nvram get buildno)_$(nvram get extendno)" >>/tmp/divmail-body
+	echo >>/tmp/divmail-body
+	if [ "$(version_check $BETAVERS)" -gt "$(version_check $STABLEVERS)" ]; then
+		echo "Latest Available Beta version: $BETAVERS" >>/tmp/divmail-body
+		echo >>/tmp/divmail-body
+	fi
+	echo "Latest available stable version: $STABLEVERS" >>/tmp/divmail-body
+	echo >>/tmp/divmail-body
+	echo "See the changelog for what's new:" >>/tmp/divmail-body
+	echo "For Asuswrt-Merlin 380.xx branch: https://asuswrt.lostrealm.ca/changelog" >>/tmp/divmail-body
+	echo "For Asuswrt-Merlin 382.xx/384.xx branch: https://asuswrt.lostrealm.ca/changelog-382" >>/tmp/divmail-body
+	echo >>/tmp/divmail-body
+	echo "Downloads are available at: https://asuswrt.lostrealm.ca/download" >>/tmp/divmail-body
+	echo >>/tmp/divmail-body
+	echo "Very truly yours," >>/tmp/divmail-body
+	echo "Your $FRIENDLY_ROUTER_NAME router (Model type $routerModel)" >>/tmp/divmail-body
+	echo >>/tmp/divmail-body
+
+	/usr/sbin/curl --url $PROTOCOL://$SMTP:$PORT \
+		--mail-from "$FROM_ADDRESS" --mail-rcpt "$TO_ADDRESS" \
+		--upload-file /tmp/divmail-body \
+		--ssl-reqd \
+		--user "$USERNAME:$PASSWORD" $SSL_FLAG
+
+	if [ "$?" = "0" ]; then
+		logger -t Diversion "sent firmware notification, from $0"
+	else
+		logger -t Diversion "was unable to send firmware notification, check settings, from $0"
+	fi
+	rm -f /tmp/divmail*
+
+else
+	logger -t Diversion "was unable to send firmware notification, email.conf not found, from $0"
+fi
+#eof

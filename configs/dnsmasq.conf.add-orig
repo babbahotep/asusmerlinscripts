@@ -1,0 +1,63 @@
+address=/home.lan/127.0.0.1
+address=/home.lan/::1
+log-dhcp
+log-queries
+log-facility=/var/log/dnsmasq.log
+
+strict-order
+#dhcp-rapid-commit
+clear-on-reload
+
+dhcp-option=80,1 # rapid commit
+
+listen-address=127.0.0.1
+listen-address=192.168.1.1
+listen-address=192.168.2.1
+
+addn-hosts=/jffs/configs/hosts.dnsmasq
+
+dhcp-range=vmnet2,192.168.1.190,192.168.1.200
+dhcp-option=vmnet2,3,192.168.1.1
+dhcp-option=vmnet2,6,192.168.1.1
+dhcp-host=02:11:32:*:*:*,set:vmnet2
+dhcp-mac=set:vmnet2,00:11:32:*:*:*
+
+#BLOCK
+address=/netflix.com/192.168.1.1
+address=/youtu.be/youtube.com/youtube.de/192.168.1.1
+
+#time California
+dhcp-option=2,-28800
+dhcp-option=42,192.168.1.1
+
+#VM DHCP
+#dhcp-range=vnmet,192.168.
+#dhcp-mac=set:vmnet2,02:11:32:*:*:*
+#dhcp-mac=set:vmnet2,00:15:5D:*:*:*
+#dhcp-range=tag:vmnet,192.168.1.120,192.168.1.140,10m
+
+
+#INFRA
+dhcp-host=2C:56:DC:54:D7:D0,net:lan,192.168.1.1,INF-AC3100,10m
+dhcp-host=D8:50:E6:CE:59:D8,net:lan:192.168.1.2,INF-AC68,10m
+dhcp-host=30:85:A9:E8:B2:60,net:lan,192.168.1.3,INF-AC66,10m
+dhcp-host=20:4E:7F:48:37:31,net:lan,192.168.1.5,INF-NG108-,5m
+dhcp-host=20:4E:7F:48:37:28,net:lan,192.168.1.6,INF-NG10832lili,10m
+dhcp-host=A0:63:91:6F:FD:E2,net:lan,192.168.1.7,INF-NG10842,10m
+dhcp-host=28:C6:8E:AB:D0:F1,net:lan,192.168.1.8,INF-NG110TP,10m
+dhcp-host=f4:03:43:07:76:30,net:lan,192.168.1.18,INF-Aruba2930,10m
+dhcp-host=3c:e5:a6:a2:30:54,net:lan,192.168.1.17,INF-HPE58202,10m
+
+# NAS
+dhcp-host=3c:fd:fe:9c:a2:b4,net:lan,192.168.1.20,INF-Syno12m2,5m
+dhcp-host=00:11:32:1a:82:0d,net:lan,192.168.1.22,INF-Syno5-m2,5m
+
+# Printer
+dhcp-host=00:23:7D:8D:19:E0,net:lan,192.168.1.12,INF-CP2025Printer
+
+# PC
+dhcp-host=5c:96:9d:84:f2:b7,192.168.1.30,PC-Macpro2012,20m
+dhcp-host=00:02:c9:ea:5f:40,192.168.1.31,PC-Omega10,60m
+dhcp-host=a8:66:7f:30:bb:3e,192.168.1.32,PC-Mac-Meike2016,20m
+dhcp-host=DC:A9:04:88:C4:BD,192.168.1.33,PC-COGNI,10m
+

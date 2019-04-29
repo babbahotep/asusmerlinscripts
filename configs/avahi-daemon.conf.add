@@ -1,0 +1,8 @@
+domain-name=home.lan
+browse-domain=local
+use-iff-running=yes
+publish-addresses=yes
+publish-hinfo=yes
+publish-workstation=yes
+publish-domain=yes
+enable-reflector=yes
