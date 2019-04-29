@@ -36,10 +36,11 @@
 ehthumbs.db
 Thumbs.db
 password.sh
+password.secret
 .remote-sync.json
-id_rsa
-id_rsa.pub
-.ssh/
+**.ssh/
+**/.ssh
+/.ssh
 dnsmasq.conf.add
 dnsmasq.conf.add-orig
 *.secret
