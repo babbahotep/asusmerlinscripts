@@ -41,6 +41,5 @@ password.secret
 **.ssh/
 **/.ssh
 /.ssh
-dnsmasq.conf.add
 dnsmasq.conf.add-orig
 *.secret
