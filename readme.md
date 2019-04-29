@@ -1,4 +1,4 @@
-my personal scripts to customize an ASUS Merlin router.
+my personal crappy scripts to customize an ASUS Merlin router.
 
 running:
 entware
