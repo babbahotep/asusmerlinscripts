@@ -1,6 +1,6 @@
 #!/bin/bash
 # ./backuphost.sh user hostip
-
+#test 
 user="root"
 host1="192.168.1.120"
 host2="192.168.1.130"
@@ -9,7 +9,7 @@ sshx="/usr/bin/ssh -i /home/root/.ssh/id_rsa "
 echo "user:" "$user" "and" "host ip:" "$host1" "$host2" "$host3"
 
 # sync Config
-echo "Sync Config on ESXI host" 
+echo "Sync Config on ESXI host"
 $sshx $user@$host1 vim-cmd hostsvc/firmware/sync_config
 echo $?
 sleep 3
@@ -99,7 +99,7 @@ ls -al | grep config*
 #echo "url" $PARSED_URL
 #echo $PARSED_URL
 #echo "path" $PARSEDPATH
-#echo 
+#echo
 #echo
 #echo
 
