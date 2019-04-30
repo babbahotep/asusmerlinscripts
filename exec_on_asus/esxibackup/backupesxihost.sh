@@ -7,6 +7,7 @@ host1="192.168.1.120"
 host2="192.168.1.130"
 host3="192.168.1.140"
 stamp=`date '+%Y_%m_%d-%H-%M'`
+BACKUP_KEEP=3 # set number of days to keep
 sshx="/usr/bin/ssh -i /home/root/.ssh/id_rsa "
 echo "user:" "$user" "and" "host ip:" "$host1" "$host2" "$host3"
 echo "date" $stamp
@@ -94,6 +95,16 @@ else
   echo "$host3 is down and nothing here"
 fi
 
-sh /jffs/customscripts/exec_on_asus/mail.sh esxi@home.lan esxi@home.lan "esxi backup complete"  "$xfile21 $xfile22 $xfile23"
+# remove old backups
+find /mnt/ASUS32GB/esxibackups/120/ -mtime +$BACKUP_KEEP -type f -exec rm {} \;
+echo 'remaining:' ls /mnt/ASUS32GB/esxibackups/120/
+sleep 3
+find /mnt/ASUS32GB/esxibackups/130/ -mtime +$BACKUP_KEEP -type f -exec rm {} \;
+echo 'remaining:' ls /mnt/ASUS32GB/esxibackups/130/
+sleep 3
+find /mnt/ASUS32GB/esxibackups/140/ -mtime +$BACKUP_KEEP -type f -exec rm {} \;
+echo 'remaining:' ls /mnt/ASUS32GB/esxibackups/140/
+sleep 3
+sh /jffs/customscripts/exec_on_asus/mail.sh esxi@home.lan esxi@home.lan "esxi backup complete"  "$xfile21 /n /n $xfile22 /n /n $xfile23"
 
 exit
