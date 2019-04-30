@@ -12,8 +12,9 @@ backuppath="/mnt/ASUS32GB/esxibackups/"
 stamp=`date '+%Y_%m_%d-%H-%M'`
 BACKUP_KEEP=5 # set number of days to keep
 sshx="/usr/bin/ssh -i /home/root/.ssh/id_rsa "
-echo "user:" "$user" "and" "host ip:" "$host1" "$host2" "$host3"
-echo "date" $stamp
+#echo "user:" "$user" "and" "host ip:" "$host1" "$host2" "$host3"
+#echo "date" $stamp
+
 
 # Host 1
 echo "check if next $host1 is up"
