@@ -6,7 +6,7 @@ user="root"
 host1="192.168.1.120"
 host2="192.168.1.130"
 host3="192.168.1.140"
-backuppath="/mnt/ASUS32GB/esxibackups/"
+backuppath="/mnt/ASUS32GB/esxibackups"
 #backuppath2="/mnt/ASUS32GB/esxibackups/"
 #backuppath2="/mnt/ASUS32GB/esxibackups/"
 stamp=`date '+%Y_%m_%d-%H-%M'`
@@ -44,7 +44,9 @@ then
 	mv -f $xfile1 $backuppath/120/$xfile21
 	# remove old backups
 	find $backuppath/120/ -mtime +$BACKUP_KEEP -type f -exec rm {} \;
-	echo 'remaining:' ls $backuppath/120/
+	echo 'remaining:' "ls $backuppath/120/"
+	echo "$backuppath/120/"
+	sleep 5
 else
 	echo "$host1 is down and nothing here"
 fi
@@ -75,7 +77,7 @@ then
 	mv -f $xfile2 $backuppath/130/$xfile22
 	#remove old backups
 	find $backuppath/130/ -mtime +$BACKUP_KEEP -type f -exec rm {} \;
-	echo 'remaining:' ls $backuppath/130/
+	echo 'remaining:' "ls $backuppath/130/"
 else
 	echo "$host2 is down and nothing here"
 fi
